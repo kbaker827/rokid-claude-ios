@@ -20,7 +20,7 @@ iOS app that bridges **Claude AI** (Anthropic) with **Rokid AR glasses** — ful
 
 ## How it works
 
-The glasses are a **first-class input source** — not just a display. Any TCP client connected to port 8095 can send a text question and get Claude's answer streamed back. The phone is the bridge.
+The glasses are a **first-class input source** — not just a display. The glasses can send voice queries (via `onAsrResult()`) and receive streaming responses. The phone is the bridge.
 
 ### Three ways to ask Claude:
 
@@ -28,7 +28,7 @@ The glasses are a **first-class input source** — not just a display. Any TCP c
 |--------|-----|
 | 🗣 **Voice** | Tap mic → speak → auto-sends after 1.8 s of silence |
 | ⌨️ **Type** | Text field in the Chat tab |
-| 👓 **Glasses** | Send `QUERY: <question>\n` (or plain text) over TCP :8095 |
+| 👓 **Glasses** | Speak your question — received via RokidSDK `onAsrResult()` |
 
 ### What the glasses see (streamed in real time):
 
@@ -56,7 +56,7 @@ The glasses are a **first-class input source** — not just a display. Any TCP c
 - **Conversation memory** — configurable history (1–20 message pairs)
 - **Model selector** — Claude Haiku (fastest), Sonnet, Opus
 - **Custom system prompt** — set Claude's persona and style
-- **Bidirectional TCP server** — glasses can both receive output AND send queries
+- **Bidirectional** — glasses receive streamed output and send voice queries via RokidSDK `onAsrResult()`
 - **Suggested prompts** — quick-start questions on empty state
 
 ## SDK Setup
@@ -82,7 +82,7 @@ The only thing left for each app is filling in the three credential constants (`
 
 ## Setup
 
-1. Open `RokidClaude.xcodeproj` in Xcode 15+.
+1. Open `RokidClaude.xcworkspace` in Xcode 15+ (after running `pod install`) 15+.
 2. Set your team in Signing & Capabilities.
 3. Build and run on iPhone (iOS 17+).
 4. Grant **microphone** and **speech recognition** permissions when prompted.
@@ -90,7 +90,7 @@ The only thing left for each app is filling in the three credential constants (`
 6. Choose a model (Claude Haiku recommended for fastest glasses response).
 7. *(Glasses now connect automatically over Bluetooth — no TCP port needed.)*
 
-## TCP protocol (port 8095)
+## Communication protocol
 
 ### Phone → Glasses
 ```
@@ -132,4 +132,4 @@ Responses come back as Server-Sent Events parsed in Swift via `URLSession.bytes(
 - iOS 17.0+
 - Xcode 15+
 - Anthropic API key ([console.anthropic.com](https://console.anthropic.com))
-- Rokid AR glasses on the same Wi-Fi (optional — app works standalone as a Claude chat client)
+- Rokid AI glasses (paired via Bluetooth — no Wi-Fi needed) (optional — app works standalone as a Claude chat client)
