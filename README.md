@@ -1,5 +1,11 @@
 # Rokid Claude HUD
 
+
+> **🔵 Connectivity Update — May 2025**
+> The glasses connection has been migrated from **raw TCP sockets** to
+> **Bluetooth via the Rokid AI glasses SDK** (`pod 'RokidSDK' ~> 1.10.2`).
+> No Wi-Fi port forwarding is needed. See **SDK Setup** below.
+
 iOS app that bridges **Claude AI** (Anthropic) with **Rokid AR glasses** — fully bidirectional.
 
 ```
@@ -9,7 +15,7 @@ iOS app that bridges **Claude AI** (Anthropic) with **Rokid AR glasses** — ful
          ↓  Claude API (streaming SSE)
   api.anthropic.com
          ↓  streams tokens back
-  iPhone ──TCP :8095──▶ Rokid Glasses (response appears in real time)
+  iPhone ──Bluetooth/RokidSDK──▶ Rokid Glasses (response appears in real time)
 ```
 
 ## How it works
